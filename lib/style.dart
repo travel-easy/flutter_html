@@ -1,8 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/src/css_parser.dart';
 
 ///This class represents all the available CSS attributes
 ///for this package.
@@ -11,115 +9,115 @@ class Style {
   ///
   /// Inherited: no,
   /// Default: Colors.transparent,
-  Color? backgroundColor;
+  Color backgroundColor;
 
   /// CSS attribute "`color`"
   ///
   /// Inherited: yes,
   /// Default: unspecified,
-  Color? color;
+  Color color;
 
   /// CSS attribute "`direction`"
   ///
   /// Inherited: yes,
   /// Default: TextDirection.ltr,
-  TextDirection? direction;
+  TextDirection direction;
 
   /// CSS attribute "`display`"
   ///
   /// Inherited: no,
   /// Default: unspecified,
-  Display? display;
+  Display display;
 
   /// CSS attribute "`font-family`"
   ///
   /// Inherited: yes,
   /// Default: Theme.of(context).style.textTheme.body1.fontFamily
-  String? fontFamily;
+  String fontFamily;
 
   /// CSS attribute "`font-feature-settings`"
   ///
   /// Inherited: yes,
   /// Default: normal
-  List<FontFeature>? fontFeatureSettings;
+  List<FontFeature> fontFeatureSettings;
 
   /// CSS attribute "`font-size`"
   ///
   /// Inherited: yes,
   /// Default: FontSize.medium
-  FontSize? fontSize;
+  FontSize fontSize;
 
   /// CSS attribute "`font-style`"
   ///
   /// Inherited: yes,
   /// Default: FontStyle.normal,
-  FontStyle? fontStyle;
+  FontStyle fontStyle;
 
   /// CSS attribute "`font-weight`"
   ///
   /// Inherited: yes,
   /// Default: FontWeight.normal,
-  FontWeight? fontWeight;
+  FontWeight fontWeight;
 
   /// CSS attribute "`height`"
   ///
   /// Inherited: no,
   /// Default: Unspecified (null),
-  double? height;
+  double height;
 
   /// CSS attribute "`letter-spacing`"
   ///
   /// Inherited: yes,
   /// Default: normal (0),
-  double? letterSpacing;
+  double letterSpacing;
 
   /// CSS attribute "`list-style-type`"
   ///
   /// Inherited: yes,
   /// Default: ListStyleType.DISC
-  ListStyleType? listStyleType;
+  ListStyleType listStyleType;
 
   /// CSS attribute "`list-style-position`"
   ///
   /// Inherited: yes,
   /// Default: ListStylePosition.OUTSIDE
-  ListStylePosition? listStylePosition;
+  ListStylePosition listStylePosition;
 
   /// CSS attribute "`padding`"
   ///
   /// Inherited: no,
   /// Default: EdgeInsets.zero
-  EdgeInsets? padding;
+  EdgeInsets padding;
 
   /// CSS attribute "`margin`"
   ///
   /// Inherited: no,
   /// Default: EdgeInsets.zero
-  EdgeInsets? margin;
+  EdgeInsets margin;
 
   /// CSS attribute "`text-align`"
   ///
   /// Inherited: yes,
   /// Default: TextAlign.start,
-  TextAlign? textAlign;
+  TextAlign textAlign;
 
   /// CSS attribute "`text-decoration`"
   ///
   /// Inherited: no,
   /// Default: TextDecoration.none,
-  TextDecoration? textDecoration;
+  TextDecoration textDecoration;
 
   /// CSS attribute "`text-decoration-color`"
   ///
   /// Inherited: no,
   /// Default: Current color
-  Color? textDecorationColor;
+  Color textDecorationColor;
 
   /// CSS attribute "`text-decoration-style`"
   ///
   /// Inherited: no,
   /// Default: TextDecorationStyle.solid,
-  TextDecorationStyle? textDecorationStyle;
+  TextDecorationStyle textDecorationStyle;
 
   /// Loosely based on CSS attribute "`text-decoration-thickness`"
   ///
@@ -128,37 +126,37 @@ class Style {
   /// Inherited: no,
   /// Default: 1.0 (specified by font size)
   // TODO(Sub6Resources): Possibly base this more closely on the CSS attribute.
-  double? textDecorationThickness;
+  double textDecorationThickness;
 
   /// CSS attribute "`text-shadow`"
   ///
   /// Inherited: yes,
   /// Default: none,
-  List<Shadow>? textShadow;
+  List<Shadow> textShadow;
 
   /// CSS attribute "`vertical-align`"
   ///
   /// Inherited: no,
   /// Default: VerticalAlign.BASELINE,
-  VerticalAlign? verticalAlign;
+  VerticalAlign verticalAlign;
 
   /// CSS attribute "`white-space`"
   ///
   /// Inherited: yes,
   /// Default: WhiteSpace.NORMAL,
-  WhiteSpace? whiteSpace;
+  WhiteSpace whiteSpace;
 
   /// CSS attribute "`width`"
   ///
   /// Inherited: no,
   /// Default: unspecified (null)
-  double? width;
+  double width;
 
   /// CSS attribute "`word-spacing`"
   ///
   /// Inherited: yes,
   /// Default: normal (0)
-  double? wordSpacing;
+  double wordSpacing;
 
   /// CSS attribute "`line-height`"
   ///
@@ -168,29 +166,17 @@ class Style {
   ///
   /// Inherited: no,
   /// Default: Unspecified (null),
-  LineHeight? lineHeight;
+  double lineHeight;
 
   //TODO modify these to match CSS styles
-  String? before;
-  String? after;
-  Border? border;
-  Alignment? alignment;
-  String? markerContent;
-
-  /// MaxLine
-  ///
-  ///
-  ///
-  ///
-  int? maxLines;
-
-  /// TextOverflow
-  ///
-  ///
-  ///
-  ///
-  TextOverflow? textOverflow;
-
+  String before;
+  String after;
+  Border border;
+  Alignment alignment;
+  String markerContent;
+  int maxLines;
+  TextOverflow overflow;
+  
   Style({
     this.backgroundColor = Colors.transparent,
     this.color,
@@ -202,10 +188,12 @@ class Style {
     this.fontStyle,
     this.fontWeight,
     this.height,
+    this.overflow,
+    this.maxLines,
     this.lineHeight,
     this.letterSpacing,
     this.listStyleType,
-    this.listStylePosition = ListStylePosition.OUTSIDE,
+    this.listStylePosition,
     this.padding,
     this.margin,
     this.textAlign,
@@ -223,32 +211,11 @@ class Style {
     this.border,
     this.alignment,
     this.markerContent,
-    this.maxLines,
-    this.textOverflow,
   }) {
     if (this.alignment == null &&
         (display == Display.BLOCK || display == Display.LIST_ITEM)) {
       this.alignment = Alignment.centerLeft;
     }
-  }
-
-  static Map<String, Style> fromThemeData(ThemeData theme) => {
-    'h1': Style.fromTextStyle(theme.textTheme.headline1!),
-    'h2': Style.fromTextStyle(theme.textTheme.headline2!),
-    'h3': Style.fromTextStyle(theme.textTheme.headline3!),
-    'h4': Style.fromTextStyle(theme.textTheme.headline4!),
-    'h5': Style.fromTextStyle(theme.textTheme.headline5!),
-    'h6': Style.fromTextStyle(theme.textTheme.headline6!),
-    'body': Style.fromTextStyle(theme.textTheme.bodyText2!),
-  };
-
-  static Map<String, Style> fromCss(String css, OnCssParseError? onCssParseError) {
-    final declarations = parseExternalCss(css, onCssParseError);
-    Map<String, Style> styleMap = {};
-    declarations.forEach((key, value) {
-      styleMap[key] = declarationsToStyle(value);
-    });
-    return styleMap;
   }
 
   TextStyle generateTextStyle() {
@@ -267,7 +234,7 @@ class Style {
       letterSpacing: letterSpacing,
       shadows: textShadow,
       wordSpacing: wordSpacing,
-      height: lineHeight?.size ?? 1.0,
+      height: lineHeight,
       //TODO background
       //TODO textBaseline
     );
@@ -279,6 +246,8 @@ class Style {
   }
 
   Style merge(Style other) {
+    if (other == null) return this;
+
     return copyWith(
       backgroundColor: other.backgroundColor,
       color: other.color,
@@ -291,6 +260,8 @@ class Style {
       fontWeight: other.fontWeight,
       height: other.height,
       lineHeight: other.lineHeight,
+      maxLines: other.maxLines,
+      overflow: other.overflow,
       letterSpacing: other.letterSpacing,
       listStyleType: other.listStyleType,
       listStylePosition: other.listStylePosition,
@@ -315,83 +286,64 @@ class Style {
       //TODO merge border
       alignment: other.alignment,
       markerContent: other.markerContent,
-      maxLines: other.maxLines,
-      textOverflow: other.textOverflow,
     );
   }
 
   Style copyOnlyInherited(Style child) {
-    FontSize? finalFontSize = child.fontSize != null ?
-      fontSize != null && child.fontSize?.units == "em" ?
-        FontSize(child.fontSize!.size! * fontSize!.size!) : child.fontSize
-      : fontSize != null && fontSize!.size! < 0 ?
-        FontSize.percent(100) : fontSize;
-    LineHeight? finalLineHeight = child.lineHeight != null ?
-      child.lineHeight?.units == "length" ?
-        LineHeight(child.lineHeight!.size! / (finalFontSize == null ? 14 : finalFontSize.size!) * 1.2) : child.lineHeight
-      : lineHeight;
+    if (child == null) return this;
+
     return child.copyWith(
-      backgroundColor: child.backgroundColor != Colors.transparent ?
-        child.backgroundColor : backgroundColor,
       color: child.color ?? color,
       direction: child.direction ?? direction,
-      display: display == Display.NONE ? display : child.display,
       fontFamily: child.fontFamily ?? fontFamily,
       fontFeatureSettings: child.fontFeatureSettings ?? fontFeatureSettings,
-      fontSize: finalFontSize,
+      fontSize: child.fontSize ?? fontSize,
       fontStyle: child.fontStyle ?? fontStyle,
       fontWeight: child.fontWeight ?? fontWeight,
-      lineHeight: finalLineHeight,
       letterSpacing: child.letterSpacing ?? letterSpacing,
       listStyleType: child.listStyleType ?? listStyleType,
       listStylePosition: child.listStylePosition ?? listStylePosition,
       textAlign: child.textAlign ?? textAlign,
-      textDecoration: TextDecoration.combine(
-          [child.textDecoration ?? TextDecoration.none,
-            textDecoration ?? TextDecoration.none]),
       textShadow: child.textShadow ?? textShadow,
       whiteSpace: child.whiteSpace ?? whiteSpace,
       wordSpacing: child.wordSpacing ?? wordSpacing,
-      maxLines: child.maxLines ?? maxLines,
-      textOverflow: child.textOverflow ?? textOverflow,
     );
   }
 
   Style copyWith({
-    Color? backgroundColor,
-    Color? color,
-    TextDirection? direction,
-    Display? display,
-    String? fontFamily,
-    List<FontFeature>? fontFeatureSettings,
-    FontSize? fontSize,
-    FontStyle? fontStyle,
-    FontWeight? fontWeight,
-    double? height,
-    LineHeight? lineHeight,
-    double? letterSpacing,
-    ListStyleType? listStyleType,
-    ListStylePosition? listStylePosition,
-    EdgeInsets? padding,
-    EdgeInsets? margin,
-    TextAlign? textAlign,
-    TextDecoration? textDecoration,
-    Color? textDecorationColor,
-    TextDecorationStyle? textDecorationStyle,
-    double? textDecorationThickness,
-    List<Shadow>? textShadow,
-    VerticalAlign? verticalAlign,
-    WhiteSpace? whiteSpace,
-    double? width,
-    double? wordSpacing,
-    String? before,
-    String? after,
-    Border? border,
-    Alignment? alignment,
-    String? markerContent,
-    int? maxLines,
-    TextOverflow? textOverflow,
-    bool? beforeAfterNull,
+    Color backgroundColor,
+    Color color,
+    TextDirection direction,
+    Display display,
+    String fontFamily,
+    List<FontFeature> fontFeatureSettings,
+    FontSize fontSize,
+    FontStyle fontStyle,
+    FontWeight fontWeight,
+    double height,
+    double lineHeight,
+    int maxLines,
+    TextOverflow overflow,
+    double letterSpacing,
+    ListStyleType listStyleType,
+    ListStylePosition listStylePosition,
+    EdgeInsets padding,
+    EdgeInsets margin,
+    TextAlign textAlign,
+    TextDecoration textDecoration,
+    Color textDecorationColor,
+    TextDecorationStyle textDecorationStyle,
+    double textDecorationThickness,
+    List<Shadow> textShadow,
+    VerticalAlign verticalAlign,
+    WhiteSpace whiteSpace,
+    double width,
+    double wordSpacing,
+    String before,
+    String after,
+    Border border,
+    Alignment alignment,
+    String markerContent,
   }) {
     return Style(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -405,6 +357,8 @@ class Style {
       fontWeight: fontWeight ?? this.fontWeight,
       height: height ?? this.height,
       lineHeight: lineHeight ?? this.lineHeight,
+      maxLines: maxLines ?? this.maxLines,
+      overflow: overflow ?? this.overflow,
       letterSpacing: letterSpacing ?? this.letterSpacing,
       listStyleType: listStyleType ?? this.listStyleType,
       listStylePosition: listStylePosition ?? this.listStylePosition,
@@ -421,13 +375,11 @@ class Style {
       whiteSpace: whiteSpace ?? this.whiteSpace,
       width: width ?? this.width,
       wordSpacing: wordSpacing ?? this.wordSpacing,
-      before: beforeAfterNull == true ? null : before ?? this.before,
-      after: beforeAfterNull == true ? null : after ?? this.after,
+      before: before ?? this.before,
+      after: after ?? this.after,
       border: border ?? this.border,
       alignment: alignment ?? this.alignment,
       markerContent: markerContent ?? this.markerContent,
-      maxLines: maxLines ?? this.maxLines,
-      textOverflow: textOverflow ?? this.textOverflow,
     );
   }
 
@@ -446,7 +398,7 @@ class Style {
     this.letterSpacing = textStyle.letterSpacing;
     this.textShadow = textStyle.shadows;
     this.wordSpacing = textStyle.wordSpacing;
-    this.lineHeight = LineHeight(textStyle.height ?? 1.2);
+    this.lineHeight = textStyle.height;
   }
 }
 
@@ -455,27 +407,18 @@ enum Display {
   INLINE,
   INLINE_BLOCK,
   LIST_ITEM,
-  NONE,
 }
 
 class FontSize {
-  final double? size;
-  final String units;
+  final double size;
 
-  const FontSize(this.size, {this.units = ""});
+  const FontSize(this.size);
 
   /// A percentage of the parent style's font size.
   factory FontSize.percent(int percent) {
-    return FontSize(percent.toDouble() / -100.0, units: "%");
+    return FontSize(percent.toDouble() / -100.0);
   }
 
-  factory FontSize.em(double? em) {
-    return FontSize(em, units: "em");
-  }
-
-  factory FontSize.rem(double rem) {
-    return FontSize(rem * 16 - 2, units: "rem");
-  }
   // These values are calculated based off of the default (`medium`)
   // being 14px.
   //
@@ -494,42 +437,9 @@ class FontSize {
   static const larger = FontSize(-1.2);
 }
 
-class LineHeight {
-  final double? size;
-  final String units;
-
-  const LineHeight(this.size, {this.units = ""});
-
-  factory LineHeight.percent(double percent) {
-    return LineHeight(percent / 100.0 * 1.2, units: "%");
-  }
-
-  factory LineHeight.em(double em) {
-    return LineHeight(em * 1.2, units: "em");
-  }
-
-  factory LineHeight.rem(double rem) {
-    return LineHeight(rem * 1.2, units: "rem");
-  }
-
-  factory LineHeight.number(double num) {
-    return LineHeight(num * 1.2, units: "number");
-  }
-
-  static const normal = LineHeight(1.2);
-}
-
 enum ListStyleType {
-  LOWER_ALPHA,
-  UPPER_ALPHA,
-  LOWER_LATIN,
-  UPPER_LATIN,
-  CIRCLE,
   DISC,
   DECIMAL,
-  LOWER_ROMAN,
-  UPPER_ROMAN,
-  SQUARE,
 }
 
 enum ListStylePosition {
@@ -547,3 +457,4 @@ enum WhiteSpace {
   NORMAL,
   PRE,
 }
+
